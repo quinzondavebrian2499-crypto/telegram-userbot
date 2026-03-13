@@ -1,63 +1,49 @@
-from telethon import events, Button
+from telethon import events
 from __main__ import client
-
 
 @client.on(events.NewMessage(pattern=r".menu"))
 async def menu(event):
 
-    buttons = [
-        [Button.inline("📦 Plugins", b"plugins")],
-        [Button.inline("⚙ Settings", b"settings")],
-        [Button.inline("🛠 Utilities", b"utilities")],
-        [Button.inline("❌ Close", b"close")]
-    ]
+    text = """
+🤖 **Userbot Menu**
 
-    await event.respond(
-        "🤖 **Userbot Menu**\nChoose an option:",
-        buttons=buttons
-    )
+📦 Plugins
+.plugins
+
+⚙ Settings
+.settings
+
+🛠 Utilities
+.utilities
+"""
+
+    await event.reply(text)
 
 
-@client.on(events.CallbackQuery)
-async def callbacks(event):
+@client.on(events.NewMessage(pattern=r".settings"))
+async def settings(event):
 
-    data = event.data.decode("utf-8")
+    text = """
+⚙ **Settings**
 
-    if data == "plugins":
+.setprefix
+.afk
+.autoreply
+"""
 
-        await event.edit(
-            "📦 **Installed Plugins**\n\nUse `.plugins` to see plugin list.",
-            buttons=[[Button.inline("⬅ Back", b"back")]]
-        )
+    await event.reply(text)
 
-    elif data == "settings":
 
-        await event.edit(
-            "⚙ **Userbot Settings**\n\nCommands:\n.setprefix\n.afk\n.autoreply",
-            buttons=[[Button.inline("⬅ Back", b"back")]]
-        )
+@client.on(events.NewMessage(pattern=r".utilities"))
+async def utilities(event):
 
-    elif data == "utilities":
+    text = """
+🛠 **Utilities**
 
-        await event.edit(
-            "🛠 **Utilities**\n\nCommands:\n.calc\n.translate\n.img\n.remind",
-            buttons=[[Button.inline("⬅ Back", b"back")]]
-        )
+.calc
+.translate
+.img
+.remind
+"""
 
-    elif data == "back":
-
-        buttons = [
-            [Button.inline("📦 Plugins", b"plugins")],
-            [Button.inline("⚙ Settings", b"settings")],
-            [Button.inline("🛠 Utilities", b"utilities")],
-            [Button.inline("❌ Close", b"close")]
-        ]
-
-        await event.edit(
-            "🤖 **Userbot Menu**\nChoose an option:",
-            buttons=buttons
-        )
-
-    elif data == "close":
-
-        await event.delete()
+    await event.reply(text)
