@@ -1,0 +1,16 @@
+from telethon import TelegramClient, events
+import os
+
+api_id = int(os.environ.get("API_ID"))
+api_hash = os.environ.get("API_HASH")
+
+client = TelegramClient("userbot", api_id, api_hash)
+
+@client.on(events.NewMessage(pattern=".ping"))
+async def ping(event):
+    await event.reply("Pong! Userbot working 🚀")
+
+client.start()
+print("Userbot running...")
+
+client.run_until_disconnected()
