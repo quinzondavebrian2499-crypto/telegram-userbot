@@ -5,6 +5,7 @@ from __main__ import client
 import database
 import prefix
 
+
 @client.on(events.NewMessage(pattern=r"\.setprefix (.+)"))
 async def setprefix(event):
 
