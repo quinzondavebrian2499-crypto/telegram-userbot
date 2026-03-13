@@ -1,0 +1,14 @@
+from telethon import events
+from __main__ import client
+
+@client.on(events.NewMessage(pattern=".info"))
+async def info(event):
+    sender = await event.get_sender()
+
+    text = f"""
+👤 Name: {sender.first_name}
+🆔 User ID: {sender.id}
+📛 Username: @{sender.username}
+"""
+
+    await event.reply(text)
