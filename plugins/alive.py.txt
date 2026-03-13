@@ -1,0 +1,6 @@
+from telethon import events
+from __main__ import client
+
+@client.on(events.NewMessage(pattern=".alive"))
+async def alive(event):
+    await event.reply("✅ Userbot is alive!")
