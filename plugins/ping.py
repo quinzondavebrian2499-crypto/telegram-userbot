@@ -3,6 +3,7 @@
 from command import cmd
 import time
 
+
 @cmd("ping")
 async def ping(event):
 
