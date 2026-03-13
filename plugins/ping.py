@@ -1,11 +1,9 @@
-# plugin: Ping | command: .ping | desc: Check bot response speed
+# plugin: Ping | command: ping | desc: Check bot response speed
 
-from telethon import events
-from __main__ import client
+from command import cmd
 import time
 
-
-@client.on(events.NewMessage(pattern=r"\.ping"))
+@cmd("ping")
 async def ping(event):
 
     start = time.time()
