@@ -2,6 +2,7 @@ import prefix
 from telethon import events
 from __main__ import client
 
+
 def cmd(name):
 
     pattern = rf"^{prefix.PREFIX}{name}"
