@@ -1,4 +1,5 @@
 import prefix
+import owner
 from telethon import events
 from __main__ import client
 
@@ -9,11 +10,18 @@ def cmd(name):
 
     def decorator(func):
 
+        async def wrapper(event):
+
+            if event.sender_id != owner.OWNER_ID:
+                return
+
+            await func(event)
+
         client.add_event_handler(
-            func,
+            wrapper,
             events.NewMessage(pattern=pattern)
         )
 
-        return func
+        return wrapper
 
     return decorator
