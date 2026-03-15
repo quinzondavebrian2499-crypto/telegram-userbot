@@ -12,6 +12,7 @@ def cmd(name):
 
         async def wrapper(event):
 
+            # only allow owner commands
             if event.sender_id != owner.OWNER_ID:
                 return
 
