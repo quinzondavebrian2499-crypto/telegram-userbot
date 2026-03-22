@@ -2,8 +2,9 @@ import os
 import database
 
 # Telegram API
-API_ID = 2127709
-API_HASH = "5b7a6b1e4ff43ac9437114de58cef95a"
+API_ID = int(os.environ.get("API_ID"))
+API_HASH = os.environ.get("API_HASH")
+
 
 # Owner
 OWNER_ID = 1327719064  # your Telegram ID
