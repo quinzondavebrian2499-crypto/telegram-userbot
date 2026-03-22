@@ -1,6 +1,0 @@
-from telethon import events
-from __main__ import client
-
-@client.on(events.NewMessage(pattern=".id"))
-async def get_id(event):
-    await event.reply(f"Chat ID: {event.chat_id}")
