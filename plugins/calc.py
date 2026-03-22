@@ -1,5 +1,11 @@
 from command import cmd
 
+HELP = {
+    "name": "Calculator",
+    "description": "Evaluate math expressions",
+    "usage": ".calc 5+5"
+}
+
 @cmd("calc")
 async def calc(event):
 
