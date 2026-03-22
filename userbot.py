@@ -14,4 +14,24 @@ client.start()
 
 print("🔥 Clean Userbot Running...")
 
-client.run_until_disconnected()
+import database
+
+async def after_restart():
+    data = database.get("restart")
+
+    if not data:
+        return
+
+    try:
+        msg = await client.get_messages(data["chat_id"], ids=data["msg_id"])
+        await msg.edit("✅ Restarted successfully!")
+    except:
+        pass
+
+    database.set("restart", None)
+
+
+with client:
+    client.loop.run_until_complete(after_restart())
+    print("🔥 Clean Userbot Running...")
+    client.run_until_disconnected()
