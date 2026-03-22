@@ -1,8 +1,5 @@
-# plugin: Ping | command: ping | desc: Check bot response speed
-
 from command import cmd
 import time
-
 
 @cmd("ping")
 async def ping(event):
@@ -13,6 +10,6 @@ async def ping(event):
 
     end = time.time()
 
-    ping_ms = round((end - start) * 1000, 2)
+    ping = round((end - start) * 1000, 2)
 
-    await msg.edit(f"🏓 Pong!\nSpeed: {ping_ms} ms")
+    await msg.edit(f"🏓 Pong!\nSpeed: {ping} ms")
