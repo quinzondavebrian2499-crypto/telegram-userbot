@@ -1,19 +1,18 @@
-import prefix
-import owner
 from telethon import events
+from config import PREFIX, OWNER_ID
 from __main__ import client
 
 
 def cmd(name):
 
-    pattern = rf"^{prefix.PREFIX}{name}"
+    pattern = rf"^{PREFIX}{name}(?:\s|$)"
 
     def decorator(func):
 
         async def wrapper(event):
 
-            # only allow owner commands
-            if event.sender_id != owner.OWNER_ID:
+            # OWNER ONLY
+            if event.sender_id != OWNER_ID:
                 return
 
             await func(event)
