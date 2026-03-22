@@ -4,6 +4,12 @@ from __main__ import client
 import time
 import database
 
+HELP = {
+    "name": "AutoReply",
+    "description": "Automatic replies to keywords",
+    "usage": ".setreply hi Hello!"
+}
+
 LAST_REPLY = {}
 
 
