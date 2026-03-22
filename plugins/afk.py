@@ -4,6 +4,12 @@ from __main__ import client
 import time
 import database
 
+HELP = {
+    "name": "AFK",
+    "description": "Set AFK status",
+    "usage": ".afk <reason> / .afk off"
+}
+
 LAST_REPLY = {}
 
 
