@@ -2,9 +2,17 @@ from telethon import events
 from command import cmd
 from __main__ import client
 import time
+import database
 
-REPLIES = {}
 LAST_REPLY = {}
+
+
+def get_replies():
+    return database.get("replies", {})
+
+
+def save_replies(data):
+    database.set("replies", data)
 
 
 # ======================
@@ -16,8 +24,14 @@ async def setreply(event):
 
     try:
         _, key, value = event.text.split(" ", 2)
-        REPLIES[key.lower()] = value
-        await event.reply(f"✅ Reply added for: {key}")
+
+        replies = get_replies()
+        replies[key.lower()] = value
+
+        save_replies(replies)
+
+        await event.reply(f"✅ Reply saved: {key}")
+
     except:
         await event.reply("Usage: .setreply hi Hello!")
 
@@ -31,8 +45,14 @@ async def delreply(event):
 
     try:
         _, key = event.text.split(" ", 1)
-        REPLIES.pop(key.lower(), None)
-        await event.reply(f"❌ Reply removed: {key}")
+
+        replies = get_replies()
+        replies.pop(key.lower(), None)
+
+        save_replies(replies)
+
+        await event.reply(f"❌ Removed: {key}")
+
     except:
         await event.reply("Usage: .delreply hi")
 
@@ -44,13 +64,15 @@ async def delreply(event):
 @cmd("replies")
 async def list_replies(event):
 
-    if not REPLIES:
-        await event.reply("No auto replies set.")
+    replies = get_replies()
+
+    if not replies:
+        await event.reply("No replies saved.")
         return
 
     text = "📌 Auto Replies:\n\n"
 
-    for k, v in REPLIES.items():
+    for k, v in replies.items():
         text += f"{k} → {v}\n"
 
     await event.reply(text)
@@ -63,8 +85,8 @@ async def list_replies(event):
 @client.on(events.NewMessage(incoming=True))
 async def auto_reply(event):
 
-    # ignore your own messages
     me = await client.get_me()
+
     if event.sender_id == me.id:
         return
 
@@ -74,14 +96,15 @@ async def auto_reply(event):
 
     msg = msg.lower()
 
-    for key, value in REPLIES.items():
+    replies = get_replies()
+
+    for key, value in replies.items():
 
         if key in msg:
 
             user = event.sender_id
             now = time.time()
 
-            # cooldown (15 seconds)
             if user in LAST_REPLY:
                 if now - LAST_REPLY[user] < 15:
                     return
