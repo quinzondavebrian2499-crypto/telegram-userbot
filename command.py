@@ -1,11 +1,13 @@
 from telethon import events
 from config import PREFIX, OWNER_ID
 from __main__ import client
+import re
 
 
 def cmd(name):
 
-    pattern = rf"^{PREFIX}{name}(?:\s|$)"
+    # STRICT pattern
+    pattern = rf"^{re.escape(PREFIX)}{name}(?:\s|$)"
 
     def decorator(func):
 
