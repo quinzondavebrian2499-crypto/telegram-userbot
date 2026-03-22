@@ -1,7 +1,9 @@
-import os
+import database
 
-API_ID = int(os.environ.get("API_ID"))
-API_HASH = os.environ.get("API_HASH")
+OWNER_ID = 1327719064  # your Telegram ID
 
-OWNER_ID = 1327719064  # your ID
-PREFIX = "."
+def get_prefix():
+    return database.get("prefix", ".")
+
+def set_prefix(p):
+    database.set("prefix", p)
