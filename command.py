@@ -10,21 +10,26 @@ def cmd(name):
 
         async def wrapper(event):
 
+            # ONLY YOUR COMMANDS
             if event.sender_id != OWNER_ID:
                 return
 
             prefix = get_prefix()
 
+            text = event.raw_text
+            if not text:
+                return
+
             pattern = rf"^{re.escape(prefix)}{name}(?:\s|$)"
 
-            if not re.match(pattern, event.raw_text):
+            if not re.match(pattern, text):
                 return
 
             await func(event)
 
         client.add_event_handler(
             wrapper,
-            events.NewMessage(incoming=True)
+            events.NewMessage()  # ✅ LISTEN TO ALL (IMPORTANT)
         )
 
         return wrapper
