@@ -1,0 +1,7 @@
+import os
+
+API_ID = int(os.environ.get("API_ID"))
+API_HASH = os.environ.get("API_HASH")
+
+OWNER_ID = 1327719064  # your ID
+PREFIX = "."
