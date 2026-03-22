@@ -1,6 +1,12 @@
 from command import cmd
 import time
 
+HELP = {
+    "name": "Ping",
+    "description": "Check bot latency",
+    "usage": ".ping"
+}
+
 @cmd("ping")
 async def ping(event):
 
