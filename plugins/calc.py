@@ -1,11 +1,10 @@
-from telethon import events
-from __main__ import client
+from command import cmd
 
-@client.on(events.NewMessage(pattern=".calc (.*)"))
+@cmd("calc")
 async def calc(event):
-    expr = event.pattern_match.group(1)
 
     try:
+        expr = event.text.split(" ", 1)[1]
         result = eval(expr)
         await event.reply(f"🧮 Result: {result}")
     except:
