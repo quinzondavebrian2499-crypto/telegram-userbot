@@ -1,10 +1,10 @@
 from telethon import events
 from config import OPENAI_API_KEY, OWNER_ID
 from __main__ import client
-import openai
-from command import cmd   # ✅ ADD THIS LINE
+from command import cmd
+from openai import OpenAI
 
-openai.api_key = OPENAI_API_KEY
+client_ai = OpenAI(api_key=OPENAI_API_KEY)
 
 AI_ENABLED = True
 
@@ -12,7 +12,7 @@ AI_ENABLED = True
 # 🤖 AUTO REPLY
 @client.on(events.NewMessage(incoming=True))
 async def ai_autoreply(event):
-    
+
     if not AI_ENABLED:
         return
 
@@ -28,7 +28,7 @@ async def ai_autoreply(event):
         if not user_message:
             return
 
-        response = openai.ChatCompletion.create(
+        response = client_ai.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
                 {"role": "system", "content": "You are a helpful Telegram assistant."},
@@ -36,7 +36,7 @@ async def ai_autoreply(event):
             ]
         )
 
-        reply = response.choices[0].message["content"]
+        reply = response.choices[0].message.content
 
         await event.reply(reply)
 
