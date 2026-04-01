@@ -1,6 +1,6 @@
-from userbot import client
 from telethon import events
 from openai import OpenAI
+from userbot import client  # 🔥 THIS IS THE FIX
 import os
 
 # ===== SETTINGS =====
