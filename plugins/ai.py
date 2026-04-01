@@ -2,23 +2,23 @@ from telethon import events
 from config import OPENAI_API_KEY, OWNER_ID
 from __main__ import client
 import openai
+from command import cmd   # ✅ ADD THIS LINE
 
 openai.api_key = OPENAI_API_KEY
 
 AI_ENABLED = True
 
 
+# 🤖 AUTO REPLY
 @client.on(events.NewMessage(incoming=True))
 async def ai_autoreply(event):
     
     if not AI_ENABLED:
         return
 
-    # ignore yourself
     if event.sender_id == OWNER_ID:
         return
 
-    # only reply in private chats
     if not event.is_private:
         return
 
@@ -42,3 +42,22 @@ async def ai_autoreply(event):
 
     except Exception as e:
         print("AI ERROR:", e)
+
+
+# 🔘 COMMAND CONTROL
+@cmd("ai")
+async def toggle_ai(event):
+    global AI_ENABLED
+
+    args = event.raw_text.split()
+
+    if len(args) < 2:
+        await event.reply("Usage: .ai on / .ai off")
+        return
+
+    if args[1] == "on":
+        AI_ENABLED = True
+        await event.reply("🤖 AI AutoReply Enabled")
+    elif args[1] == "off":
+        AI_ENABLED = False
+        await event.reply("❌ AI AutoReply Disabled")
