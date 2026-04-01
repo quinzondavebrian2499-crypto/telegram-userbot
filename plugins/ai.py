@@ -61,3 +61,4 @@ async def toggle_ai(event):
     elif args[1] == "off":
         AI_ENABLED = False
         await event.reply("❌ AI AutoReply Disabled")
+        print("AI TRIGGERED:", event.raw_text)
