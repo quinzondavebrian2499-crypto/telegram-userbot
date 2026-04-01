@@ -3,6 +3,7 @@ from openai import OpenAI
 from userbot import client  # 🔥 THIS IS THE FIX
 import os
 
+print("🔥 AI PLUGIN LOADED")
 # ===== SETTINGS =====
 AI_ENABLED = True
 OWNER_ID = 123456789  # <-- replace with your Telegram user ID
