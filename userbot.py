@@ -5,33 +5,17 @@ from config import API_ID, API_HASH
 
 client = TelegramClient("userbot", API_ID, API_HASH)
 
-# load plugins
+# ===== LOAD PLUGINS (WITH ERROR LOGGING) =====
 for file in os.listdir("./plugins"):
     if file.endswith(".py"):
-        importlib.import_module(f"plugins.{file[:-3]}")
+        try:
+            print(f"🔄 Loading {file}...")
+            importlib.import_module(f"plugins.{file[:-3]}")
+        except Exception as e:
+            print(f"❌ Failed to load {file}: {e}")
 
 client.start()
 
 print("🔥 Clean Userbot Running...")
 
-import database
-
-async def after_restart():
-    data = database.get("restart")
-
-    if not data:
-        return
-
-    try:
-        msg = await client.get_messages(data["chat_id"], ids=data["msg_id"])
-        await msg.edit("✅ Restarted successfully!")
-    except:
-        pass
-
-    database.set("restart", None)
-
-
-with client:
-    client.loop.run_until_complete(after_restart())
-    print("🔥 Clean Userbot Running...")
-    client.run_until_disconnected()
+client.run_until_disconnected()
