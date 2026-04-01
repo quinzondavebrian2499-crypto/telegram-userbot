@@ -1,6 +1,19 @@
+from telethon import events
+from openai import OpenAI
+import os
+
+# ===== SETTINGS =====
+AI_ENABLED = True
+OWNER_ID = 123456789  # <-- replace with your Telegram user ID
+
+# ===== OPENAI CLIENT =====
+client_ai = OpenAI(
+    api_key="sk-REPLACE_THIS_WITH_YOUR_KEY"
+)
+
+# ===== AUTO REPLY =====
 @client.on(events.NewMessage(incoming=True))
 async def ai_autoreply(event):
-
     print("🔥 EVENT DETECTED:", event.raw_text)
 
     if not AI_ENABLED:
